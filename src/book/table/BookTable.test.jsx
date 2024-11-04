@@ -19,7 +19,7 @@ const books = [
 
 describe('Book Table', () => {
   describe('View', () => {
-    test('table renders', () => {
+    test('default', () => {
       render(
         <BrowserRouter>
           <Routes>
@@ -35,7 +35,7 @@ describe('Book Table', () => {
   });
 
   describe('Clicking', () => {
-    test('delete button fires deleteBooks function', () => {
+    test('delete button triggers handleBookDelete', () => {
       const handleBookDelete = jest.fn();
 
       render(
