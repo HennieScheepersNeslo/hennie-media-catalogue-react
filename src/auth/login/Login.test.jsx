@@ -8,7 +8,7 @@ import Login from './Login';
 
 describe('Login', () => {
   describe('View', () => {
-    test('renders login form', () => {
+    test('default', () => {
       render(
         <BrowserRouter>
           <Routes>
@@ -23,13 +23,13 @@ describe('Login', () => {
   });
 
   describe('Clicking', () => {
-    test('login button fires login function', () => {
-      const loginHandler = jest.fn();
+    test('login button triggers handleLogin', () => {
+      const handleLogin = jest.fn();
 
       render(
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login login={loginHandler} />} />
+            <Route path="/" element={<Login login={handleLogin} />} />
           </Routes>
         </BrowserRouter>
       );
@@ -39,7 +39,7 @@ describe('Login', () => {
 
       user.click(loginButton);
 
-      expect(loginHandler).toHaveBeenCalledTimes(1);
+      expect(handleLogin).toHaveBeenCalledTimes(1);
     });
   });
 });
