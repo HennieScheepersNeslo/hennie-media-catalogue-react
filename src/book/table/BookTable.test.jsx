@@ -48,11 +48,11 @@ describe('Book Table', () => {
 
       const deleteButton = screen.getByText('delete.svg');
       expect(deleteButton).toBeInTheDocument();
-      
+
       user.click(deleteButton);
 
       const confirmButton = screen.getByText('Confirm');
-      expect(confirmButton).toBeInTheDocument()
+      expect(confirmButton).toBeInTheDocument();
 
       user.click(confirmButton);
       expect(handleBookDelete).toHaveBeenCalledTimes(1);
