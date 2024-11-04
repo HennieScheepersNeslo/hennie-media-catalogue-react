@@ -10,7 +10,7 @@ const Login = ({ login }) => {
   const [isValidToken, setIsValidToken] = useState(true);
 
   const navigate = useNavigate();
-  
+
   const [user, setUser] = useState({
     username: '',
     password: ''
