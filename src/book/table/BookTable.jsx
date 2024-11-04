@@ -135,7 +135,7 @@ const BookTable = ({ books, deleteBook }) => {
             <tr>
               <th>ID</th>
               <th>Title</th>
-              <th>Artist</th>
+              <th>Author</th>
               <th>Duration</th>
               <th>Release Date</th>
               <th>Actions</th>
