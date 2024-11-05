@@ -52,6 +52,7 @@ describe('Book Saga', () => {
         HttpVerb.GET,
         mockHeader
       );
+      
       let step = generator.next().value;
       expect(step).toEqual(call(axios, endpoint, axiosOptions));
 
