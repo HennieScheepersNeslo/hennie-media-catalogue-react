@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { setLoading } from '../cd/cd.reducer';
 
-const initialState = {
+export const initialState = {
   books: [],
   loading: false
 };
@@ -11,28 +11,25 @@ const bookSlice = createSlice({
   name: 'bookSlice',
   initialState,
   reducers: {
-    setLoading: (state, action) => {
-      state.loading = action.payload;
+    loadBooks: (state) => {
+      state.loading = true;
     },
 
-    loadBooks: () => {
-      setLoading(true);
-    },
     setBooks: (state, action) => {
       state.books = action.payload;
       setLoading(false);
     },
 
-    addBook: () => {
-      setLoading(true);
+    addBook: (state) => {
+      state.loading = true;
     },
 
-    editBook: () => {
-      setLoading(true);
+    editBook: (state) => {
+      state.loading = true;
     },
 
-    removeBook: () => {
-      setLoading(true);
+    removeBook: (state) => {
+      state.loading = true;
     }
   }
 });
