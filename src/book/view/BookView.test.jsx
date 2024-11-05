@@ -6,15 +6,15 @@ import { formatDate } from '@neslotech/ui-utils';
 
 import BookView from './BookView';
 
-const book = {
-  id: 1,
-  title: 'A book about things',
-  author: 'A. Person',
-  duration: 123,
-  publishedDate: formatDate(new Date(), 'fr-CA')
-};
-
 describe('Book View', () => {
+  const book = {
+    id: 1,
+    title: 'A book about things',
+    author: 'A. Person',
+    duration: 123,
+    publishedDate: formatDate(new Date(), 'fr-CA')
+  };
+
   describe('View', () => {
     test('default', () => {
       render(<BookView book={book} />);

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-const renderComponentWithBrowserRouter = (component) => {
+export const renderComponentWithBrowserRouter = (component) => {
   render(
     <BrowserRouter>
       <Routes>
@@ -10,5 +10,3 @@ const renderComponentWithBrowserRouter = (component) => {
     </BrowserRouter>
   );
 };
-
-export default renderComponentWithBrowserRouter;

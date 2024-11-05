@@ -4,7 +4,7 @@ import user from '@testing-library/user-event';
 
 import { formatDate } from '@neslotech/ui-utils';
 
-import renderComponentWithBrowserRouter from '../../util/render-util';
+import { renderComponentWithBrowserRouter } from '../../test/util/render-util';
 
 import BookTable from './BookTable';
 

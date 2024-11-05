@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
-import renderComponentWithBrowserRouter from '../../util/render-util';
+import { renderComponentWithBrowserRouter } from '../../test/util/render-util';
 
 import BookAdd from './BookAdd';
 
