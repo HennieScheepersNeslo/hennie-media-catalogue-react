@@ -1,20 +1,15 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import renderComponentWithBrowserRouter from '../../util/render-util';
 
 import BookAdd from './BookAdd';
 
 describe('BookAdd', () => {
   describe('View', () => {
     test('default', () => {
-      render(
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<BookAdd />} />
-          </Routes>
-        </BrowserRouter>
-      );
+      renderComponentWithBrowserRouter(<BookAdd />);
 
       const header = screen.getByRole('heading', { innerHTML: 'Add Book' });
 
@@ -26,13 +21,7 @@ describe('BookAdd', () => {
     test('add button triggers handleBookAdd', () => {
       const handleBookAdd = jest.fn();
 
-      render(
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<BookAdd handleBookAdd={handleBookAdd} />} />
-          </Routes>
-        </BrowserRouter>
-      );
+      renderComponentWithBrowserRouter(<BookAdd handleBookAdd={handleBookAdd} />);
 
       const addButton = screen.getByRole('button', { innerHTML: 'Add' });
       expect(addButton).toBeInTheDocument();
