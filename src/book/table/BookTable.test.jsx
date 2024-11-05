@@ -1,9 +1,10 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { formatDate } from '@neslotech/ui-utils';
+
+import { renderComponentWithBrowserRouter } from '../../test/util/render-util';
 
 import BookTable from './BookTable';
 
@@ -20,13 +21,7 @@ const books = [
 describe('Book Table', () => {
   describe('View', () => {
     test('default', () => {
-      render(
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<BookTable books={books} />} />
-          </Routes>
-        </BrowserRouter>
-      );
+      renderComponentWithBrowserRouter(<BookTable books={books} />);
 
       const bookTableEl = screen.getByText('Add Book');
 
@@ -38,13 +33,7 @@ describe('Book Table', () => {
     test('delete button triggers handleBookDelete', () => {
       const handleBookDelete = jest.fn();
 
-      render(
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<BookTable books={books} deleteBook={handleBookDelete} />} />
-          </Routes>
-        </BrowserRouter>
-      );
+      renderComponentWithBrowserRouter(<BookTable books={books} deleteBook={handleBookDelete} />);
 
       const deleteButton = screen.getByText('delete.svg');
       expect(deleteButton).toBeInTheDocument();
