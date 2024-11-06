@@ -18,12 +18,12 @@ import bookSaga, {
 
 import { addBook, editBook, loadBooks, removeBook, setBooks } from './book.reducer';
 
-jest.mock('axios');
-
 describe('Book Saga', () => {
   const mockHeader = { Authorization: 'Bearer ' };
 
-  jest.spyOn(console, 'warn').mockImplementation(() => {});
+  beforeAll(() => {
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
+  });
 
   const book = {
     id: 1,
@@ -72,8 +72,6 @@ describe('Book Saga', () => {
     });
 
     test('with error', () => {
-      axios.get.mockRejectedValueOnce(new Error('Something went wrong fetching the books'));
-
       const { endpoint, axiosOptions } = new ApiRequest(
         `${API_URL}/books`,
         HttpVerb.GET,
@@ -85,8 +83,10 @@ describe('Book Saga', () => {
       let step = generator.next().value;
       expect(step).toEqual(call(axios, endpoint, axiosOptions));
 
-      step = generator.next().value;
-      expect(step).toEqual(console.warn('Something went wrong fetching the books'));
+      generator.throw(new Error('Something went wrong when fetching the books'));
+      expect(console.warn).toHaveBeenCalledWith(
+        new Error('Something went wrong when fetching the books')
+      );
     });
   });
 
@@ -227,5 +227,7 @@ describe('Book Saga', () => {
     });
   });
 
-  console.warn.mockRestore();
+  afterAll(() => {
+    console.warn.mockRestore();
+  });
 });
