@@ -9,7 +9,7 @@ import { addBook, editBook, loadBooks, removeBook, setBooks } from './book.reduc
 
 import HEADERS from '../headers';
 
-function* loadBooksSaga() {
+export function* loadBooksSaga() {
   try {
     const { endpoint, axiosOptions } = new ApiRequest(`${API_URL}/books`, HttpVerb.GET, HEADERS);
 
@@ -20,11 +20,11 @@ function* loadBooksSaga() {
   }
 }
 
-function* watchForLoadBooks() {
+export function* watchForLoadBooks() {
   yield takeLatest(loadBooks.type, loadBooksSaga);
 }
 
-function* addBookSaga({ payload }) {
+export function* addBookSaga({ payload }) {
   try {
     const { endpoint, axiosOptions } = new ApiRequest(
       `${API_URL}/books`,
@@ -40,11 +40,11 @@ function* addBookSaga({ payload }) {
   }
 }
 
-function* watchForAddBook() {
+export function* watchForAddBook() {
   yield takeLatest(addBook.type, addBookSaga);
 }
 
-function* editBookSaga({ payload }) {
+export function* editBookSaga({ payload }) {
   try {
     const { endpoint, axiosOptions } = new ApiRequest(
       `${API_URL}/books/${payload.id}`,
@@ -60,11 +60,11 @@ function* editBookSaga({ payload }) {
   }
 }
 
-function* watchForEditBook() {
+export function* watchForEditBook() {
   yield takeLatest(editBook.type, editBookSaga);
 }
 
-function* removeBookSaga({ payload }) {
+export function* removeBookSaga({ payload }) {
   try {
     const { endpoint, axiosOptions } = new ApiRequest(
       `${API_URL}/books/${payload}`,
@@ -78,7 +78,7 @@ function* removeBookSaga({ payload }) {
   }
 }
 
-function* watchForRemoveBook() {
+export function* watchForRemoveBook() {
   yield takeLatest(removeBook.type, removeBookSaga);
 }
 
