@@ -23,4 +23,4 @@ const deleteItem = (state, id) => {
   }
 };
 
-export { addItem, updateItem, deleteItem };
+export { addItem, updateItem, deleteItem, findItemIndex };
