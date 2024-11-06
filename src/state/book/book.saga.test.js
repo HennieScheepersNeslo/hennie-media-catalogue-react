@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, call, put } from 'redux-saga/effects';
+import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { ApiRequest, HttpVerb, formatDate } from '@neslotech/ui-utils';
 
@@ -16,10 +16,14 @@ import bookSaga, {
   watchForRemoveBook
 } from './book.saga';
 
-import { loadBooks, setBooks } from './book.reducer';
+import { addBook, editBook, loadBooks, removeBook, setBooks } from './book.reducer';
+
+jest.mock('axios');
 
 describe('Book Saga', () => {
   const mockHeader = { Authorization: 'Bearer ' };
+
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
 
   const book = {
     id: 1,
@@ -38,7 +42,14 @@ describe('Book Saga', () => {
   });
 
   describe('Load Books', () => {
-    test('with no errors', () => {
+    test('watch', () => {
+      const generator = watchForLoadBooks();
+
+      const step = generator.next().value;
+      expect(step).toEqual(takeLatest(loadBooks.type, loadBooksSaga));
+    });
+
+    test('with no error', () => {
       const generator = loadBooksSaga();
 
       const mockResponse = {
@@ -52,17 +63,42 @@ describe('Book Saga', () => {
         HttpVerb.GET,
         mockHeader
       );
-      
+
       let step = generator.next().value;
       expect(step).toEqual(call(axios, endpoint, axiosOptions));
 
       step = generator.next(mockResponse).value;
-      expect(step).toStrictEqual(put(setBooks(mockResponse.data)));
+      expect(step).toEqual(put(setBooks(mockResponse.data)));
+    });
+
+    test('with error', () => {
+      axios.get.mockRejectedValueOnce(new Error('Something went wrong fetching the books'));
+
+      const { endpoint, axiosOptions } = new ApiRequest(
+        `${API_URL}/books`,
+        HttpVerb.GET,
+        mockHeader
+      );
+
+      const generator = loadBooksSaga();
+
+      let step = generator.next().value;
+      expect(step).toEqual(call(axios, endpoint, axiosOptions));
+
+      step = generator.next().value;
+      expect(step).toEqual(console.warn('Something went wrong fetching the books'));
     });
   });
 
   describe('Add book', () => {
-    test('with no errors', () => {
+    test('watch', () => {
+      const generator = watchForAddBook();
+
+      const step = generator.next().value;
+      expect(step).toEqual(takeLatest(addBook.type, addBookSaga));
+    });
+
+    test('with no error', () => {
       const generator = addBookSaga({ payload: book });
 
       const { endpoint, axiosOptions } = new ApiRequest(
@@ -78,10 +114,38 @@ describe('Book Saga', () => {
       step = generator.next().value;
       expect(step).toEqual(put(loadBooks()));
     });
+
+    test('with error', () => {
+      jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const { endpoint, axiosOptions } = new ApiRequest(
+        `${API_URL}/books`,
+        HttpVerb.POST,
+        mockHeader,
+        book
+      );
+
+      const generator = addBookSaga({ payload: book });
+
+      let step = generator.next().value;
+      expect(step).toEqual(call(axios, endpoint, axiosOptions));
+
+      generator.throw(new Error('Something went wrong when adding a book'));
+      expect(console.warn).toHaveBeenCalledWith(
+        new Error('Something went wrong when adding a book')
+      );
+    });
   });
 
   describe('Edit Book', () => {
-    test('with no erros', () => {
+    test('watch', () => {
+      const generator = watchForEditBook();
+
+      const step = generator.next().value;
+      expect(step).toEqual(takeLatest(editBook.type, editBookSaga));
+    });
+
+    test('with no error', () => {
       const generator = editBookSaga({ payload: book });
 
       const { endpoint, axiosOptions } = new ApiRequest(
@@ -97,9 +161,37 @@ describe('Book Saga', () => {
       step = generator.next().value;
       expect(step).toEqual(put(loadBooks()));
     });
+
+    test('with error', () => {
+      jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const { endpoint, axiosOptions } = new ApiRequest(
+        `${API_URL}/books/${book.id}`,
+        HttpVerb.PUT,
+        mockHeader,
+        book
+      );
+
+      const generator = editBookSaga({ payload: book });
+
+      let step = generator.next().value;
+      expect(step).toEqual(call(axios, endpoint, axiosOptions));
+
+      generator.throw(new Error('Something went wrong when updating the book'));
+      expect(console.warn).toHaveBeenCalledWith(
+        new Error('Something went wrong when updating the book')
+      );
+    });
   });
 
   describe('Remove Book', () => {
+    test('watch', () => {
+      const generator = watchForRemoveBook();
+
+      const step = generator.next().value;
+      expect(step).toEqual(takeLatest(removeBook.type, removeBookSaga));
+    });
+
     test('with no errors', () => {
       const generator = removeBookSaga({ payload: book.id });
 
@@ -115,5 +207,25 @@ describe('Book Saga', () => {
       step = generator.next().value;
       expect(step).toEqual(put(loadBooks()));
     });
+
+    test('with error', () => {
+      const generator = removeBookSaga({ payload: book.id });
+
+      const { endpoint, axiosOptions } = new ApiRequest(
+        `${API_URL}/books/${book.id}`,
+        HttpVerb.DELETE,
+        mockHeader
+      );
+
+      let step = generator.next().value;
+      expect(step).toEqual(call(axios, endpoint, axiosOptions));
+
+      generator.throw(new Error('Something went wrong when trying to remove the book'));
+      expect(console.warn).toHaveBeenCalledWith(
+        new Error('Something went wrong when trying to remove the book')
+      );
+    });
   });
+
+  console.warn.mockRestore();
 });
