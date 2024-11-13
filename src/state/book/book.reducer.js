@@ -17,7 +17,7 @@ const bookSlice = createSlice({
 
     setBooks: (state, action) => {
       state.books = action.payload;
-      setLoading(false);
+      state.loading = false;
     },
 
     addBook: (state) => {

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { screen } from '@testing-library/react';
+import { getByRole, getByText, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 import { formatDate } from '@neslotech/ui-utils';
@@ -26,6 +26,26 @@ describe('Book Table', () => {
       const bookTableEl = screen.getByText('Add Book');
 
       expect(bookTableEl).toBeInTheDocument();
+    });
+
+    test('shows book view when bookToView has value', () => {
+      const mockSetter = jest.fn();
+
+      renderComponentWithBrowserRouter(<BookTable books={books} />);
+
+      const book = {
+        id: 1,
+        title: 'testTitle',
+        author: 'testAuthor',
+        duration: 123,
+        publishedDate: formatDate(new Date(), 'fr-CA')
+      };
+
+      mockSetter.mockImplementationOnce(({ setBookToView }) => setBookToView(book));
+
+      const titleEl = screen.getByRole('heading', { innerHTML: book.title });
+
+      expect(titleEl).toBeInTheDocument();
     });
   });
 
