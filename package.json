@@ -37,6 +37,9 @@
     "format": "yarn prettier --write .",
     "lint": "yarn eslint"
   },
+  "engines": {
+    "node": "20.17.0"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
