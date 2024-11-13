@@ -13,7 +13,7 @@ const cdSlice = createSlice({
       state.loading = action.payload;
     },
 
-    loadCDs: () => {
+    loadCDs: (state) => {
       state.loading = true;
     },
 
