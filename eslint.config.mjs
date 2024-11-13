@@ -1,5 +1,11 @@
 export default [
   {
+    extends: [
+      'react-app',
+      'react-app/jest'
+    ]
+  },
+  {
     ignores: ['build', 'eslint.config.js', 'coverage']
   },
   {

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { state } from 'lit/decorators.js';
 
 const initialState = {
   cds: [],
