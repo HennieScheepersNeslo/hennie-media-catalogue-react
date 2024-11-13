@@ -5,27 +5,27 @@ import userEvent from '@testing-library/user-event';
 
 import { renderComponentWithBrowserRouter } from '../../test/util/render-util';
 
-import BookEdit from './BookEdit';
+import CDEdit from './CDEdit';
 
-describe('Book Edit', () => {
-  const fetchBook = jest.fn();
+describe('CD Edit', () => {
+  const fetchCD = jest.fn();
 
   describe('View', () => {
     test('default', () => {
-      renderComponentWithBrowserRouter(<BookEdit id="1" fetchBook={fetchBook} />);
+      renderComponentWithBrowserRouter(<CDEdit id="1" fetchCD={fetchCD} />);
 
-      const heading = screen.getByRole('heading', { innerHTML: 'Edit Book' });
+      const heading = screen.getByRole('heading', { innerHTML: 'Edit CD' });
       expect(heading).toBeInTheDocument();
-      expect(fetchBook).toHaveBeenCalledTimes(1);
+      expect(fetchCD).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('Typing', () => {
-    const handleBookEdit = jest.fn();
+    const mockHandleCDEdit = jest.fn();
 
     test('updates title', () => {
       renderComponentWithBrowserRouter(
-        <BookEdit id="1" fetchBook={fetchBook} handleBookEdit={handleBookEdit} />
+        <CDEdit id="1" fetchCD={fetchCD} handleCDEdit={mockHandleCDEdit} />
       );
 
       const titleInput = screen.getByLabelText('Title');
@@ -35,21 +35,21 @@ describe('Book Edit', () => {
       expect(titleInput).toHaveValue('test title');
     });
 
-    test('updates author', () => {
+    test('updates artist', () => {
       renderComponentWithBrowserRouter(
-        <BookEdit id="1" fetchBook={fetchBook} handleBookEdit={handleBookEdit} />
+        <CDEdit id="1" fetchCD={fetchCD} handleCDEdit={mockHandleCDEdit} />
       );
 
-      const authorEl = screen.getByLabelText('Author');
+      const authorEl = screen.getByLabelText('Artist');
 
-      userEvent.type(authorEl, 'test author');
+      userEvent.type(authorEl, 'test artist');
 
-      expect(authorEl).toHaveValue('test author');
+      expect(authorEl).toHaveValue('test artist');
     });
 
     test('updates duration', () => {
       renderComponentWithBrowserRouter(
-        <BookEdit id="1" fetchBook={fetchBook} handleBookEdit={handleBookEdit} />
+        <CDEdit id="1" fetchCD={fetchCD} handleCDEdit={mockHandleCDEdit} />
       );
 
       const durationEL = screen.getByLabelText('Duration');
@@ -62,17 +62,17 @@ describe('Book Edit', () => {
 
   describe('Clicking', () => {
     test('save button triggers handleBookEdit', () => {
-      const handleBookEdit = jest.fn();
+      const mockHandleCDEdit = jest.fn();
 
       renderComponentWithBrowserRouter(
-        <BookEdit id="1" fetchBook={fetchBook} handleBookEdit={handleBookEdit} />
+        <CDEdit id="1" fetchCD={fetchCD} handleCDEdit={mockHandleCDEdit} />
       );
 
       const saveButton = screen.getByRole('button', { innerHTML: 'Save' });
       expect(saveButton).toBeInTheDocument();
 
       user.click(saveButton);
-      expect(handleBookEdit).toHaveBeenCalledTimes(1);
+      expect(mockHandleCDEdit).toHaveBeenCalledTimes(1);
     });
   });
 });

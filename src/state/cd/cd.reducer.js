@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { state } from 'lit/decorators.js';
 
 const initialState = {
   cds: [],
@@ -14,23 +15,24 @@ const cdSlice = createSlice({
     },
 
     loadCDs: () => {
-      setLoading(true);
+      state.loading = true;
     },
+
     setCDs: (state, action) => {
       state.cds = action.payload;
-      setLoading(false);
+      state.loading = true;
     },
 
     addCD: () => {
-      setLoading(true);
+      state.loading = true;
     },
 
     editCD: () => {
-      setLoading(true);
+      state.loading = true;
     },
 
     removeCD: () => {
-      setLoading(true);
+      state.loading = true;
     }
   }
 });

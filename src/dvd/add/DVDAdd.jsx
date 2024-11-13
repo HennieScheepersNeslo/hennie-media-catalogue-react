@@ -71,7 +71,7 @@ const DVDAdd = ({ handleDVDAdd }) => {
             />
           </fieldset>
           <fieldset>
-            <label htmlFor="lead-actress">Lead&nbsp;Actress</label>
+            <label htmlFor="leadActress">Lead&nbsp;Actress</label>
             <input
               name="leadActress"
               id="leadActress"

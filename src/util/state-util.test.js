@@ -28,6 +28,14 @@ describe('State Util', () => {
     expect(actualIndex).toEqual(0);
   });
 
+  test('fails to find index', () => {
+    const array = [];
+
+    const actualIndex = findItemIndex(array, 1);
+
+    expect(actualIndex).toBe(-1);
+  });
+
   test('adds item', () => {
     const array = [
       {
@@ -70,6 +78,14 @@ describe('State Util', () => {
     expect(array).toStrictEqual(expectedArray);
   });
 
+  test('fails to update item when index -1', () => {
+    const array = [];
+
+    const actualValue = updateItem(array, 1);
+
+    expect(actualValue).toBe(-1);
+  });
+
   test('deletes item', () => {
     const array = [
       {
@@ -86,5 +102,13 @@ describe('State Util', () => {
     deleteItem(array, 1);
 
     expect(array).toStrictEqual(expectedArray);
+  });
+
+  test('fails to delete item when index is -1', () => {
+    const array = [];
+
+    const actualValue = deleteItem(array, 1);
+
+    expect(actualValue).toBe(-1);
   });
 });

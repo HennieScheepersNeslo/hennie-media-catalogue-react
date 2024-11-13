@@ -31,7 +31,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/' --coverage",
+    "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/'",
+    "test:ci": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/' --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "format": "yarn prettier --write .",
     "lint": "yarn eslint"

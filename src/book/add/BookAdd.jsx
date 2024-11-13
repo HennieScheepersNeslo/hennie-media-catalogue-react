@@ -68,7 +68,7 @@ const BookAdd = ({ handleBookAdd }) => {
             />
           </fieldset>
           <fieldset>
-            <label htmlFor="publishedDate">Release&nbsp;Date</label>
+            <label htmlFor="publishedDate">Published&nbsp;Date</label>
             <input
               name="publishedDate"
               id="publishedDate"
