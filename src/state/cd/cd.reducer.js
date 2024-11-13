@@ -22,15 +22,15 @@ const cdSlice = createSlice({
       state.loading = true;
     },
 
-    addCD: () => {
+    addCD: (state) => {
       state.loading = true;
     },
 
-    editCD: () => {
+    editCD: (state) => {
       state.loading = true;
     },
 
-    removeCD: () => {
+    removeCD: (state) => {
       state.loading = true;
     }
   }
