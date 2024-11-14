@@ -1,12 +1,50 @@
 version: 2.1
+
 orbs:
   node: circleci/node@5.1.1
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:20.17.0
+
 jobs:
-  build-and-test:
+  format:
+    executor: node-executor
     steps:
+      - checkout
       - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: follows prettier rules
+          command: yarn format --check
+
+  test:
+    executor: node-executor
+    steps: 
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: run all tests
           command: yarn test
+
+  build:
+    executor: node-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: build the application
+          command: yarn build
+
 workflows:
   build-and-test:
     jobs:
-      - build-and-test
+      - format
+      - test
+      - build
