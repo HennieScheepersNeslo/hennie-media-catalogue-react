@@ -9,11 +9,11 @@ jobs:
   test:
     steps: 
       - run:
-        command: yarn test
+          command: yarn test
   build:
     steps:
       - run:
-        command: npm start
+          command: npm start
 workflows:
   build-and-test:
     jobs:
