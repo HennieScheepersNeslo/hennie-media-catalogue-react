@@ -11,8 +11,6 @@ executors:
 jobs:
   format:
     executor: node-executor
-    environment: 
-      NPM_TOKEN: '%env:NPM_TOKEN%'
     steps:
       - checkout
       - run:
