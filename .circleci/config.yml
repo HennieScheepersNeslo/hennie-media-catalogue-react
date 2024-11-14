@@ -14,6 +14,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
           name: follows prettier rules
           command: yarn format --check
 
@@ -21,6 +24,9 @@ jobs:
     executor: node-executor
     steps: 
       - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install
       - run:
           name: run all tests
           command: yarn test
