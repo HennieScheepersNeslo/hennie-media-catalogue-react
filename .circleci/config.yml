@@ -1,0 +1,22 @@
+version: 2.1
+orbs:
+  node: circleci/node@5.1.1
+jobs:
+  format:
+    steps:
+      - run:
+          command: yarn format
+  test:
+    steps: 
+      - run:
+        command: yarn test
+  build:
+    steps:
+      - run:
+        command: npm start
+workflows:
+  build-and-test:
+    jobs:
+      - format
+      - test
+      - build
