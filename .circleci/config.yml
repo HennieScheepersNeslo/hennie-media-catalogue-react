@@ -5,14 +5,23 @@ jobs:
   format:
     steps:
       - run:
+          name: format code
           command: yarn format
   test:
     steps: 
       - run:
+          name: run all tests
           command: yarn test
   build:
+    docker:
+      - image: circleci/node:16
     steps:
+      - checkout
       - run:
+          name: Install dependencies
+          command: yarn install
+      - run:
+          name: Start the application
           command: npm start
 workflows:
   build-and-test:
