@@ -41,7 +41,7 @@
     "lint": "yarn eslint"
   },
   "engines": {
-    "node": "20.17.0"
+    "node": "17.2.0"
   },
 
   "browserslist": {
