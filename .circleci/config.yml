@@ -6,7 +6,7 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: cimg/node:etc
+      - image: circleci/node:latest
 
 jobs:
   format:
