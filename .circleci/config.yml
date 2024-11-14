@@ -6,7 +6,7 @@ orbs:
 executors:
   node-executor:
     docker:
-      - image: circleci/node:20.17.0
+      - image: circleci/node:20
 
 jobs:
   format:
