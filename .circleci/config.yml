@@ -1,17 +1,28 @@
 version: 2.1
+
 orbs:
   node: circleci/node@5.1.1
+
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:16
+
 jobs:
   format:
+    executor: node-executor
     steps:
       - run:
-          name: format code
-          command: yarn format
+          name: follows prettier rules
+          command: yarn format --check
+
   test:
+    executor: node-executor
     steps: 
       - run:
           name: run all tests
           command: yarn test
+
   build:
     docker:
       - image: circleci/node:16
@@ -21,8 +32,9 @@ jobs:
           name: Install dependencies
           command: yarn install
       - run:
-          name: Start the application
-          command: npm start
+          name: build the application
+          command: yarn build
+
 workflows:
   build-and-test:
     jobs:
